@@ -1,4 +1,4 @@
-TMX2BIN v0.9 - by Orion_ [2008 - 2019]
+TMX2BIN v1.0 - by Orion_ [2008 - 2019]
 
 https://orionsoft.game/
 orionsoft@free.fr
