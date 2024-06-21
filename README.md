@@ -1,6 +1,6 @@
 TMX2BIN v1.0 - by Orion_ [2008 - 2019]
 
-https://orionsoft.game/
+https://orionsoft.games/
 orionsoft@free.fr
 
 Tiled is a very good Map Editor, unfortunately the file format output is an XML file, not easy to read on old system, so I made this tool to convert the xml into a binary file easily readable.
