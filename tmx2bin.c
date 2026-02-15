@@ -1,5 +1,5 @@
 /*
-	TMX2BIN v1.0 by Orion_ [2010/2023]
+	TMX2BIN v1.1 by Orion_ [2010/2025]
 	http://orionsoft.games/
 */
 
@@ -69,15 +69,15 @@ void	WriteB(unsigned char byte, FILE *f)
 	fwrite(&byte, 1, 1, f);
 }
 
-int	bige, MinusOne, bytemode, curlayer, MergeLayers;
+int	bige, Minus, bytemode, curlayer, MergeLayers;
 unsigned short	*ptr, *map;
 
 void	WriteTile(FILE *f, uint32_t data)
 {
 	unsigned short	d16 = data & 0x7FF;
 
-	if (MinusOne)
-		d16--;
+	if (d16 && Minus)
+		d16 -= Minus;
 	if (data & TILED_X_FLIP)
 		d16 |= TILE_X_FLIP;
 	if (data & TILED_Y_FLIP)
@@ -97,7 +97,7 @@ int		main(int argc, char *argv[])
 {
 	InitBase64Table();
 
-	printf("TMX2BIN v1.0 - by Orion_ [2010/2023] http://orionsoft.games/\n\n");
+	printf("TMX2BIN v1.1 - by Orion_ [2010/2025] http://orionsoft.games/\n\n");
 
 	if (argc > 1)
 	{
@@ -107,7 +107,7 @@ int		main(int argc, char *argv[])
 		int i, s, base64mode = 0, csvmode = 0, layer = -1, maxlayer = -1, NoHeader = 0;
 		uint32_t *cl;
 
-		MergeLayers = curlayer = bige = MinusOne = bytemode = 0;
+		MergeLayers = curlayer = bige = Minus = bytemode = 0;
 		for (s = 2; s < argc; s++)
 		{
 			if (strcmp(argv[s], "-bigendian") == 0)
@@ -124,8 +124,11 @@ int		main(int argc, char *argv[])
 				s++;
 				layer = atoi(argv[s]);
 			}
-			else if (strcmp(argv[s], "-minusone") == 0)
-				MinusOne = 1;
+			else if (strcmp(argv[s], "-minus") == 0)
+			{
+				s++;
+				Minus = atoi(argv[s]);
+			}
 			else if (strcmp(argv[s], "-noheader") == 0)
 				NoHeader = 1;
 			else if (strcmp(argv[s], "-mergelayers") == 0)
@@ -325,7 +328,7 @@ int		main(int argc, char *argv[])
 				"         \'-byte\' to output unsigned char.\n"
 				"         \'-layer N\' to only process the layer N of the map. [0 -> ?]\n"
 				"         \'-maxlayer N\' to only process the first N layers of the map. [1 -> ?]\n"
-				"         \'-minusone\' to substract 1 to each tile index.\n"
+				"         \'-minus N\' to substract N to each tile index.\n"
 				"         \'-noheader\' to remove the file header (only tile data)\n"
 				"         \'-mergelayers\' to merge all layers into a single one\n"
 				"                          (upper layers tiles replace bottom layers tiles)\n");
