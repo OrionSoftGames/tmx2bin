@@ -1,4 +1,4 @@
-TMX2BIN v1.0 - by Orion_ [2008 - 2019]
+TMX2BIN v1.1 - by Orion_ [2008 - 2025]
 
 https://orionsoft.games/
 orionsoft@free.fr
@@ -17,7 +17,7 @@ Add switch "-bigendian" to output big endian "unsigned short".
 Add switch "-byte" to output "unsigned char".
 Add switch "-layer N" to only process the layer N of the map. [0 -> ?]
 Add switch "-maxlayer N" to only process the first N layers of the map. [1 -> ?]
-Add switch "-minusone" to substract 1 to each tile index.
+Add switch "-minus N" to substract N to each tile index.
 Add switch "-noheader" to remove the file header (only tile data)
 Add switch "-mergelayers" to merge all layers into a single one (upper layers tiles replace bottom layers tiles)
 
