@@ -1,4 +1,4 @@
-TMX2BIN v1.1 - by Orion_ [2008 - 2025]
+TMX2BIN v1.2 - by Orion_ [2008 - 2026]
 
 https://orionsoft.games/
 orionsoft@free.fr
@@ -23,6 +23,11 @@ Add switch "-mergelayers" to merge all layers into a single one (upper layers ti
 
 Normal mode:      No tile =  0, First tile = 1
 -minusone switch: No tile = -1, First tile = 0
+
+The version 1.2 now support left/right tile flip ! (using custom flags)
+Rotation Flag = 0x8000
+Left Rotation = 0x8800 (Rotation Flag + X Flip Flag)
+Right Rotation = 0x9000 (Rotation Flag + Y Flip Flag)
 
 The version 0.8 now support X/Y tile flip ! (using Megadrive compatible Flags)
 X Flip Flag = 0x0800

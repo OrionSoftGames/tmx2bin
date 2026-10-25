@@ -8,10 +8,17 @@
 #include <stdint.h>
 #include <string.h>
 
+#define	TILED_FLAG		0xE0000000
 #define	TILED_X_FLIP	0x80000000
 #define	TILED_Y_FLIP	0x40000000
+#define	TILED_LEFT_ROT	0x60000000
+#define	TILED_RIGHT_ROT	0xA0000000
+#define	TILED_INVALID	0x20000000
+
 #define	TILE_X_FLIP		0x0800		// MD attributes
 #define	TILE_Y_FLIP		0x1000
+#define	TILE_LEFT_ROT	0x8800		// Custom attributes
+#define	TILE_RIGHT_ROT	0x9000
 
 //------------------------------------------
 // Base64 Stuff
@@ -78,10 +85,20 @@ void	WriteTile(FILE *f, uint32_t data)
 
 	if (d16 && Minus)
 		d16 -= Minus;
-	if (data & TILED_X_FLIP)
-		d16 |= TILE_X_FLIP;
-	if (data & TILED_Y_FLIP)
-		d16 |= TILE_Y_FLIP;
+	if ((data & TILED_FLAG) == TILED_INVALID)
+		printf("Unsupported rotation/flip flag!\n");
+	else if ((data & TILED_FLAG) == TILED_LEFT_ROT)
+		d16 |= TILE_LEFT_ROT;
+	else if ((data & TILED_FLAG) == TILED_RIGHT_ROT)
+		d16 |= TILE_RIGHT_ROT;
+	else
+	{
+		if (data & TILED_X_FLIP)
+			d16 |= TILE_X_FLIP;
+		if (data & TILED_Y_FLIP)
+			d16 |= TILE_Y_FLIP;
+	}
+
 	if (MergeLayers && curlayer && (!d16))	// avoid erasing previous layer tile in case of merging layers
 	{
 		ptr++;
@@ -97,7 +114,7 @@ int		main(int argc, char *argv[])
 {
 	InitBase64Table();
 
-	printf("TMX2BIN v1.1 - by Orion_ [2010/2025] http://orionsoft.games/\n\n");
+	printf("TMX2BIN v1.2 - by Orion_ [2010/2025] http://orionsoft.games/\n\n");
 
 	if (argc > 1)
 	{
